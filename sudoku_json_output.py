@@ -1,6 +1,6 @@
 # !/usr/bin/python
 import sys
-from Sudoku import *
+from Sudoku.Generator import *
 
 # setting difficulties and their cutoffs for each solve method
 difficulties = {
@@ -11,10 +11,10 @@ difficulties = {
 }
 
 # getting desired difficulty from command line
-difficulty = difficulties[sys.argv[2]]
+difficulty = difficulties[sys.argv[1]]
 
 # constructing generator object from puzzle file (space delimited columns, line delimited rows)
-gen = Generator(sys.argv[1])
+gen = Generator("base.txt")
 
 # applying 100 random transformations to puzzle
 gen.randomize(100)
@@ -34,8 +34,17 @@ if difficulty[1] != 0:
 # getting copy after reductions are completed
 final = gen.board.copy()
 
-# printing out complete board (solution)
-print("The initial board before removals was: \r\n\r\n{0}".format(initial))
+answer = ""
+for col in xrange(0, 9):
+    for row in xrange(0, 9):
+        answer += str(initial.rows[col][row].value)
+    answer += ","
+answer = answer[:-1]
 
-# printing out board after reduction
-print("The generated board after removals was: \r\n\r\n{0}".format(final))
+question = ""
+for col in xrange(0, 9):
+    for row in xrange(0, 9):
+        question += str(final.rows[col][row].value)
+    question += ","
+question = question[:-1]
+print(question)
