@@ -1,6 +1,7 @@
 # !/usr/bin/python
 import sys
 from Sudoku.Generator import *
+import json
 
 # setting difficulties and their cutoffs for each solve method
 difficulties = {
@@ -34,12 +35,15 @@ if difficulty[1] != 0:
 # getting copy after reductions are completed
 final = gen.board.copy()
 
+data = {}
+
 answer = ""
 for col in xrange(0, 9):
     for row in xrange(0, 9):
         answer += str(initial.rows[col][row].value)
     answer += ","
 answer = answer[:-1]
+data['a'] = answer
 
 question = ""
 for col in xrange(0, 9):
@@ -47,4 +51,6 @@ for col in xrange(0, 9):
         question += str(final.rows[col][row].value)
     question += ","
 question = question[:-1]
-print(question)
+data['q'] = question
+
+print(json.dumps(data))
